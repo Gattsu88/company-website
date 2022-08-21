@@ -21,6 +21,9 @@ Route::get('/', function () {
 // Admin routes
 Route::controller(AdminController::class)->group(function() {
     Route::post('/admin/logout', 'destroy')->name('admin.logout');
+    Route::get('/admin/profile', 'profile')->name('admin.profile');
+    Route::get('/admin/profile/edit', 'editProfile')->name('admin.profile.edit');
+    Route::post('/admin/profile/store', 'storeProfile')->name('admin.profile.store');
 });
 
 Route::get('/dashboard', function () {
