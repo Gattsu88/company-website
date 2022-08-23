@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Flasher\Prime\FlasherInterface;
+use Illuminate\Support\Facades\Hash;
 
 
 class AdminController extends Controller
@@ -48,7 +49,7 @@ class AdminController extends Controller
         $storeData->username = $request->username;
         $storeData->email = $request->email;
 
-        if($request->file('profile_image')) {
+        if ($request->file('profile_image')) {
             $file = $request->file('profile_image');
             $filename = date('YmdHi').$file->getClientOriginalName();
             $file->move(public_path('upload/admin_images'), $filename);
@@ -57,11 +58,36 @@ class AdminController extends Controller
 
         $storeData->save();
 
-        if($storeData) {
+        if ($storeData) {
             $flasher->addSuccess('Admin profile updated successfully.');
             return redirect()->route('admin.profile');
         } else {
             $flasher->addError('Admin data is not updated.');
+            return back();
+        }
+    }
+
+    public function editPassword()
+    {
+        return view('admin.admin_password_edit');
+    }
+
+    public function storePassword(Request $request, FlasherInterface $flasher)
+    {
+        $validateData = $request->validate([
+            'old_password' => 'required',
+            'new_password' => 'required|min:6',
+            'confirm_password' => 'required|same:new_password'
+        ]);
+
+        $hashedPassword = Auth::user()->password;
+        if (Hash::check($request->old_password, $hashedPassword)) {
+            $user = User::find(Auth::id());
+            $user->password = bcrypt($request->new_password);
+            $user->save();
+            $flasher->addSuccess('Password successfully changed.');
+            return back();
+        } else {
             return back();
         }
     }
