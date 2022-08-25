@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Home\HomeSliderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,13 @@ Route::controller(AdminController::class)->group(function() {
     Route::get('/admin/password/edit', 'editPassword')->name('admin.password.edit');
     Route::post('/admin/password/store', 'storePassword')->name('admin.password.store');
 });
+
+
+// Home routes
+Route::controller(HomeSliderController::class)->group(function() {
+    Route::get('/home/slide', 'homeSlider')->name('home.slider');
+});
+
 
 Route::get('/dashboard', function () {
     return view('admin.index');
