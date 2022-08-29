@@ -33,7 +33,8 @@ Route::controller(AdminController::class)->group(function() {
 
 // Home routes
 Route::controller(HomeSliderController::class)->group(function() {
-    Route::get('/home/slide', 'homeSlider')->name('home.slider');
+    Route::get('/home/slider', 'homeSlider')->name('home.slider');
+    Route::post('/home/slider/store', 'storeSlider')->name('home.slider.store');
 });
 
 

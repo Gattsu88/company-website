@@ -22,8 +22,8 @@ class HomeSlideFactory extends Factory
 
         return [
             'title' => fake()->paragraph(2),
-            'short_title' => fake()->sentence(4),
-            'home_slide' => $faker->imageUrl(640, 480, ['spedition', 'truck']),
+            'short_title' => fake()->sentence(3),
+            'home_slide' => $faker->imageUrl(636, 852, ['spedition', 'truck'], false),
             'video_url' => $faker->youtubeRandomUri,
         ];
     }

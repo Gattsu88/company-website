@@ -11,9 +11,11 @@
                     <div class="card-body">
                         <h4 class="card-title">Home Slider Page</h4>
                         <hr>
-                        <form action="{{ route('admin.profile.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('home.slider.store') }}" method="POST" enctype="multipart/form-data">
 
                             @csrf
+
+                            <input type="hidden" name="id" value="{{ $homeSlider->id, $homeSlider->id }}">
 
                             <div class="row mb-3">
                                 <label for="title" class="col-sm-2 col-form-label">Title</label>
@@ -46,7 +48,7 @@
                             <div class="row mb-3">
                                 <label for="showImage" class="col-sm-2 col-form-label"></label>
                                 <div class="col-sm-10">
-                                    <img class="rounded avatar-lg" id="showImage" src="{{ (!empty($homeSlider->home_slide)) ? url('upload/home_slider/'.$homeSlider->home_slide) : url('upload/no_image.jpg') }}" alt="Slider image">
+                                    <img class="rounded avatar-lg" id="showImage" src="{{ (!empty($homeSlider->home_slide)) ? url($homeSlider->home_slide) : url('upload/no_image.jpg') }}" alt="Slider image">
                                 </div>
                             </div>
                             <!-- end row -->
@@ -62,7 +64,7 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#profile_image').change(function(e) {
+        $('#home_slide').change(function(e) {
             var reader = new FileReader();
             reader.onload = function(e) {
                 $('#showImage').attr('src', e.target.result);
